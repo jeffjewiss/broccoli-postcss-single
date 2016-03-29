@@ -1,0 +1,49 @@
+{
+  "name": "broccoli-postcss-single",
+  "version": "0.0.0",
+  "description": "Postcss compiler for Broccoli, operates on individual files.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeffjewiss/broccoli-postcss-single"
+  },
+  "scripts": {
+    "test": "nyc mocha",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "lint": "standard",
+    "prepublish": "npm run lint && npm test"
+  },
+  "engines": {
+    "node": ">=0.12"
+  },
+  "keywords": [
+    "broccoli-plugin",
+    "css",
+    "postcss",
+    "postcss-runner"
+  ],
+  "author": "Jeff Jewiss <jeffjewiss@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jeffjewiss/broccoli-postcss-single/issues"
+  },
+  "homepage": "https://github.com/jeffjewiss/broccoli-postcss-single",
+  "dependencies": {
+    "broccoli-caching-writer": "^2.1.0",
+    "include-path-searcher": "0.1.0",
+    "mkdirp": "^0.5.0",
+    "object-assign": "^4.0.1",
+    "postcss": "^5.0.4"
+  },
+  "devDependencies": {
+    "async": "^1.2.1",
+    "broccoli": "^0.16.9",
+    "coveralls": "2.11.8",
+    "glob": "^7.0.3",
+    "mocha": "*",
+    "nyc": "6.1.1",
+    "postcss-pseudoelements": "^3.0.0",
+    "rimraf": "^2.4.0",
+    "standard": "6.0.8"
+  }
+}
