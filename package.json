@@ -30,6 +30,7 @@
   "homepage": "https://github.com/jeffjewiss/broccoli-postcss-single",
   "dependencies": {
     "broccoli-caching-writer": "3.0.3",
+    "cssstats": "3.0.0",
     "include-path-searcher": "0.1.0",
     "mkdirp": "0.5.1",
     "object-assign": "4.1.1",

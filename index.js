@@ -7,6 +7,7 @@ const assign = require('object-assign')
 const includePathSearcher = require('include-path-searcher')
 const CachingWriter = require('broccoli-caching-writer')
 const postcss = require('postcss')
+const cssstats = require('cssstats')
 
 function PostcssCompiler (inputNodes, inputFile, outputFile, options, deprecatedMap) {
   if (!(this instanceof PostcssCompiler)) {
@@ -39,6 +40,16 @@ function PostcssCompiler (inputNodes, inputFile, outputFile, options, deprecated
 
   this.plugins = this.plugins || []
   this.map = this.map || {}
+  this.stats = options.stats || {
+    enabled: false,
+    pluginOptions: {
+      specificityGraph: true,
+      sortedSpecificityGraph: true,
+      repeatedSelectors: true,
+      propertyResets: true,
+      vendorPrefixedProperties: true
+    }
+  }
   this.browsers = options.browsers
 }
 
@@ -59,7 +70,8 @@ PostcssCompiler.prototype.build = function () {
     from: fromFilePath,
     to: toFilePath,
     map: this.map,
-    browsers: this.browsers
+    browsers: this.browsers,
+    stats: this.stats
   }
 
   this.plugins.forEach((plugin) => {
@@ -75,6 +87,13 @@ PostcssCompiler.prototype.build = function () {
     fs.writeFileSync(toFilePath, result.css, {
       encoding: 'utf8'
     })
+
+    if (options.stats.enabled) {
+      let statsDetails = cssstats(result.css, options.stats.pluginOptions)
+      fs.writeFileSync(toFilePath + '.stats.json', JSON.stringify(statsDetails), {
+        encoding: 'utf8'
+      })
+    }
 
     if (result.map) {
       fs.writeFileSync(`${toFilePath}.map`, result.map, {

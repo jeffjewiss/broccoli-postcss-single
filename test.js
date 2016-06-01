@@ -44,6 +44,17 @@ const browsersOptionSet = {
   browsers: ['last 2 versions', 'ie > 9', 'ios >= 8', '> 5%']
 }
 
+const statsOptionSet = {
+  stats: {
+    enabled: true
+  },
+  plugins: [
+    {
+      module: require('postcss-color-rebeccapurple')
+    }
+  ]
+}
+
 const map = {
   inline: false,
   annotation: false
@@ -95,6 +106,31 @@ it('should process css', function () {
 it('should process css using deprecated options', function () {
   let outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', basicOptionSet.plugins, basicOptionSet.map)
   return processCss(outputTree)
+})
+
+it('should throw an error if the inputTrees is not an array', function () {
+  assert.throws(function () {
+    postcssCompiler('fixture', 'syntax-error.css', 'output.css', testWarnOptionsSet, map)
+  }, /Expected array for first argument/, 'Did not throw an error for an incorrect inputTree.')
+})
+
+// it('should throw an error if no plugins are provided', function () {
+  // assert.throws(function () {
+    // postcssCompiler(['fixture'], 'syntax-error.css', 'output.css', [], map)
+  // }, /You must provide at least 1 plugin in the plugin array/, 'Did not throw an error for having no plugins.')
+// })
+
+it('should create stats json', function () {
+  let outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', statsOptionSet)
+  let builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
+  outputTree.warningStream = warningStreamStub
+
+  return builder.build().then((dir) => {
+    let statsObject = JSON.parse(fs.readFileSync(path.join(builder.outputPath, 'output.css.stats.json'), 'utf8'))
+
+    assert.strictEqual(statsObject.rules.total, 1)
+    assert.deepEqual(warnings, [])
+  })
 })
 
 it('should expose warnings', function () {
