@@ -44,6 +44,6 @@
     "nyc": "6.6.1",
     "postcss-pseudoelements": "^3.0.0",
     "rimraf": "^2.4.0",
-    "standard": "6.0.8"
+    "standard": "7.1.2"
   }
 }
