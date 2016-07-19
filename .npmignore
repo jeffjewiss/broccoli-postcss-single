@@ -2,6 +2,7 @@
 .editorconfig
 .npmignore
 .jshintrc
+*.map
 **/.gitkeep
 tmp/
 dist/
