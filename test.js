@@ -53,12 +53,13 @@ afterEach(function () {
 })
 
 it('should process css', function () {
-  var outputTree = postcssCompiler(['fixture'], 'success.css', 'output.css', basicPluginSet, map)
+  var outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', basicPluginSet, map)
+  var builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
   outputTree.warningStream = warningStreamStub
 
-  return (new broccoli.Builder(outputTree)).build().then(function (dir) {
-    var content = fs.readFileSync(path.join(dir.directory, 'output.css'), 'utf8')
-    var sourceMap = JSON.parse(fs.readFileSync(path.join(dir.directory, 'output.css.map'), 'utf8'))
+  return builder.build().then(function () {
+    var content = fs.readFileSync(path.join(builder.outputPath, 'output.css'), 'utf8')
+    var sourceMap = JSON.parse(fs.readFileSync(path.join(builder.outputPath, 'output.css.map'), 'utf8'))
 
     assert.strictEqual(content.trim(), 'a:before { content: "test"; }')
     assert.strictEqual(sourceMap.mappings, 'AAAA,WAAY,gBAAgB,EAAE')
@@ -67,26 +68,29 @@ it('should process css', function () {
 })
 
 it('should expose warnings', function () {
-  var outputTree = postcssCompiler(['fixture'], 'warning.css', 'output.css', testWarnPluginSet, map)
+  var outputTree = postcssCompiler(['fixture/warning'], 'fixture.css', 'output.css', testWarnPluginSet, map)
+  var builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
   outputTree.warningStream = warningStreamStub
 
-  return (new broccoli.Builder(outputTree)).build().then(function (dir) {
-    var content = fs.readFileSync(path.join(dir.directory, 'output.css'), 'utf8')
+  return builder.build().then(function (dir) {
+    var content = fs.readFileSync(path.join(builder.outputPath, 'output.css'), 'utf8')
     assert.strictEqual(content.trim(), 'a {}')
     assert.deepEqual(warnings, [ 'postcss-test-warn: This is a warning.' ])
   })
 })
 
 it('should expose syntax errors', function () {
-  var outputTree = postcssCompiler(['fixture'], 'syntax-error.css', 'output.css', testWarnPluginSet, map)
-  outputTree.warningStream = warningStreamStub
-
+  var outputTree = postcssCompiler(['fixture/syntax-error'], 'fixture.css', 'output.css', testWarnPluginSet, map)
+  var builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
   var count = 0
 
-  return (new broccoli.Builder(outputTree)).build()
+  outputTree.warningStream = warningStreamStub
+
+  return builder.build()
   .catch(function (error) {
     count++
-    assert.strictEqual(error.name, 'CssSyntaxError')
+    assert.strictEqual(error.broccoliPayload.originalError.name, 'CssSyntaxError')
+    assert.strictEqual(error.broccoliPayload.originalError.message, `${error.broccoliPayload.originalError.input.file}:1:1: Unknown word\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 1 | \u001b[39ma \u001b[33m}\u001b[39m\n \u001b[90m   | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 2 | \u001b[39m`)
   })
   .then(function () {
     assert.strictEqual(count, 1)
@@ -95,17 +99,18 @@ it('should expose syntax errors', function () {
 })
 
 it('should expose non-syntax errors', function () {
-  var outputTree = postcssCompiler(['fixture'], 'missing-file.css', 'output.css', testWarnPluginSet, map)
-  outputTree.warningStream = warningStreamStub
-
+  var outputTree = postcssCompiler(['fixture/missing-file'], 'fixture.css', 'output.css', testWarnPluginSet, map)
   var count = 0
 
-  return (new broccoli.Builder(outputTree)).build()
-  .catch(function () {
+  outputTree.warningStream = warningStreamStub
+
+  try {
+    new broccoli.Builder(outputTree) // eslint-disable-line no-new
+  } catch (err) {
     count++
-  })
-    .then(function () {
-      assert.strictEqual(count, 1)
-      assert.deepEqual(warnings, [])
-    })
+    assert.strictEqual(err.name, 'BuilderError')
+  }
+
+  assert.strictEqual(count, 1)
+  assert.deepEqual(warnings, [])
 })
