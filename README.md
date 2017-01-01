@@ -15,7 +15,7 @@ npm install --save-dev broccoli-postcss-single
 ## Usage
 
 ```javascript
-var compileCSS = require('broccoli-postcss');
+var compileCSS = require('broccoli-postcss-single');
 
 var outputTree = compileCSS(inputTrees, inputFile, outputFile, plugins, map);
 ```
@@ -24,13 +24,13 @@ var outputTree = compileCSS(inputTrees, inputFile, outputFile, plugins, map);
 - **`inputFile`**: Relative path of the main CSS file to process.
 - **`outputFile`** Relative path of the output CSS file.
 - **`plugins`** An array of plugin objects to be used by Postcss (a minimum of 1 plugin is required). The supported object format is `module`: the plugin module itself, and `options`: an object of supported options for the given plugin.
-- **`map`** An object of options to describe how Postcss should [handle source maps](https://github.com/postcss/postcss#source-map).
+- **`map`** An object of options to describe how Postcss should [handle source maps](https://github.com/postcss/postcss/blob/master/docs/source-maps.md).
 
 ## Example
 
 ```javascript
 /* Brocfile.js */
-var compileCSS = require('broccoli-postcss');
+var compileCSS = require('broccoli-postcss-single');
 var cssnext = require('cssnext');
 
 var plugins = [
