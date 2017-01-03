@@ -38,13 +38,13 @@
   "devDependencies": {
     "async": "^2.0.0",
     "broccoli": "^1.1.0",
-    "coveralls": "2.11.15",
+    "coveralls": "^2.11.15",
     "glob": "^7.0.3",
-    "mocha": "*",
-    "nyc": "8.4.0",
+    "mocha": "^3.2.0",
+    "nyc": "^8.4.0",
     "postcss-pseudoelements": "^3.0.0",
     "rimraf": "^2.4.0",
-    "snazzy": "5.0.0",
-    "standard": "8.6.0"
+    "snazzy": "^5.0.0",
+    "standard": "^8.6.0"
   }
 }
