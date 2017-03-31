@@ -6,9 +6,9 @@ var includePathSearcher = require('include-path-searcher')
 var CachingWriter = require('broccoli-caching-writer')
 var postcss = require('postcss')
 
-function PostcssCompiler (inputTrees, inputFile, outputFile, plugins, map) {
+function PostcssCompiler (inputTrees, inputFile, outputFile, options, depricatedMap) {
   if (!(this instanceof PostcssCompiler)) {
-    return new PostcssCompiler(inputTrees, inputFile, outputFile, plugins, map)
+    return new PostcssCompiler(inputTrees, inputFile, outputFile, options, depricatedMap)
   }
 
   if (!Array.isArray(inputTrees)) {
@@ -19,9 +19,23 @@ function PostcssCompiler (inputTrees, inputFile, outputFile, plugins, map) {
 
   this.inputFile = inputFile
   this.outputFile = outputFile
-  this.plugins = plugins || []
-  this.map = map || {}
   this.warningStream = process.stderr
+
+  if (Array.isArray(options)) {
+    console.warn('passing in a plain plugin paramater is now depricated, please pass in plugins as an option.')
+    this.plugins = options
+  } else {
+    this.plugins = options.plugins
+  }
+
+  if (depricatedMap) {
+    console.warn('passing in a plain map paramater is now depricated, please pass in mapping settings as an option.')
+    this.map = depricatedMap
+  } else {
+    this.map = options.map
+  }
+  this.plugins = this.plugins || []
+  this.map = this.map || {}
 }
 
 PostcssCompiler.prototype = Object.create(CachingWriter.prototype)
