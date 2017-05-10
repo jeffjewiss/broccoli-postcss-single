@@ -6,9 +6,9 @@ var includePathSearcher = require('include-path-searcher')
 var CachingWriter = require('broccoli-caching-writer')
 var postcss = require('postcss')
 
-function PostcssCompiler (inputTrees, inputFile, outputFile, options, depricatedMap) {
+function PostcssCompiler (inputTrees, inputFile, outputFile, options, deprecatedMap) {
   if (!(this instanceof PostcssCompiler)) {
-    return new PostcssCompiler(inputTrees, inputFile, outputFile, options, depricatedMap)
+    return new PostcssCompiler(inputTrees, inputFile, outputFile, options, deprecatedMap)
   }
 
   if (!Array.isArray(inputTrees)) {
@@ -22,15 +22,15 @@ function PostcssCompiler (inputTrees, inputFile, outputFile, options, depricated
   this.warningStream = process.stderr
 
   if (Array.isArray(options)) {
-    console.warn('passing in a plain plugin paramater is now depricated, please pass in plugins as an option.')
+    console.warn('The plugin argument has been deprecated, please set your plugins as a property on the options object.')
     this.plugins = options
   } else {
     this.plugins = options.plugins
   }
 
-  if (depricatedMap) {
-    console.warn('passing in a plain map paramater is now depricated, please pass in mapping settings as an option.')
-    this.map = depricatedMap
+  if (deprecatedMap) {
+    console.warn('The map argument has been deprecated, please set your map configuration as a property on the options object.')
+    this.map = deprecatedMap
   } else {
     this.map = options.map
   }
