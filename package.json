@@ -42,7 +42,7 @@
     "glob": "^7.0.3",
     "mocha": "^3.2.0",
     "nyc": "^10.1.0",
-    "postcss-pseudoelements": "^3.0.0",
+    "postcss-color-rebeccapurple": "^2.0.0",
     "rimraf": "^2.4.0",
     "snazzy": "^6.0.0",
     "standard": "^10.0.2"

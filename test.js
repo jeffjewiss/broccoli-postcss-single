@@ -13,7 +13,7 @@ var async = require('async')
 var basicOptionSet = {
   plugins: [
     {
-      module: require('postcss-pseudoelements')
+      module: require('postcss-color-rebeccapurple')
     }
   ]
 }
@@ -67,20 +67,20 @@ function processCss (outputTree) {
     var content = fs.readFileSync(path.join(builder.outputPath, 'output.css'), 'utf8')
     var sourceMap = JSON.parse(fs.readFileSync(path.join(builder.outputPath, 'output.css.map'), 'utf8'))
 
-    assert.strictEqual(content.trim(), 'a:before { content: "test"; }')
-    assert.strictEqual(sourceMap.mappings, 'AAAA,WAAY,gBAAgB,EAAE')
+    assert.strictEqual(content.trim(), 'body {\n  color: rgb(102, 51, 153)\n}')
+    assert.strictEqual(sourceMap.mappings, 'AAAA;EACE,wBAAoB;CACrB')
     assert.deepEqual(warnings, [])
   })
 }
 
 it('should process css', function () {
   var outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', basicOptionSet)
-  processCss(outputTree)
+  return processCss(outputTree)
 })
 
 it('should process css using depricated options', function () {
   var outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', basicOptionSet.plugins, basicOptionSet.map)
-  processCss(outputTree)
+  return processCss(outputTree)
 })
 
 it('should expose warnings', function () {
