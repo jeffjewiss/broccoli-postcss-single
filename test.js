@@ -10,26 +10,33 @@ var rimraf = require('rimraf')
 var glob = require('glob')
 var async = require('async')
 
-var basicPluginSet = [
-  {
-    module: require('postcss-pseudoelements')
-  }
-]
+var basicOptionSet = {
+  plugins: [
+    {
+      module: require('postcss-pseudoelements')
+    }
+  ]
+}
 
-var testWarnPluginSet = [
-  {
-    module: postcss.plugin('postcss-test-warn', function (opts) {
-      return function (css, result) {
-        result.warn('This is a warning.')
-      }
-    })
-  }
-]
+var testWarnOptionsSet = {
+  plugins: [
+    {
+      module: postcss.plugin('postcss-test-warn', function (opts) {
+        return function (css, result) {
+          result.warn('This is a warning.')
+        }
+      })
+    }
+  ]
+}
 
 var map = {
   inline: false,
   annotation: false
 }
+
+basicOptionSet.map = map
+testWarnOptionsSet.map = map
 
 var warnings = []
 var warningStreamStub = {
@@ -52,8 +59,7 @@ afterEach(function () {
   })
 })
 
-it('should process css', function () {
-  var outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', basicPluginSet, map)
+function processCss (outputTree) {
   var builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
   outputTree.warningStream = warningStreamStub
 
@@ -65,10 +71,20 @@ it('should process css', function () {
     assert.strictEqual(sourceMap.mappings, 'AAAA,WAAY,gBAAgB,EAAE')
     assert.deepEqual(warnings, [])
   })
+}
+
+it('should process css', function () {
+  var outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', basicOptionSet)
+  processCss(outputTree)
+})
+
+it('should process css using depricated options', function () {
+  var outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', basicOptionSet.plugins, basicOptionSet.map)
+  processCss(outputTree)
 })
 
 it('should expose warnings', function () {
-  var outputTree = postcssCompiler(['fixture/warning'], 'fixture.css', 'output.css', testWarnPluginSet, map)
+  var outputTree = postcssCompiler(['fixture/warning'], 'fixture.css', 'output.css', testWarnOptionsSet)
   var builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
   outputTree.warningStream = warningStreamStub
 
@@ -80,7 +96,7 @@ it('should expose warnings', function () {
 })
 
 it('should expose syntax errors', function () {
-  var outputTree = postcssCompiler(['fixture/syntax-error'], 'fixture.css', 'output.css', testWarnPluginSet, map)
+  var outputTree = postcssCompiler(['fixture/syntax-error'], 'fixture.css', 'output.css', testWarnOptionsSet)
   var builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
   var count = 0
 
@@ -99,7 +115,7 @@ it('should expose syntax errors', function () {
 })
 
 it('should expose non-syntax errors', function () {
-  var outputTree = postcssCompiler(['fixture/missing-file'], 'fixture.css', 'output.css', testWarnPluginSet, map)
+  var outputTree = postcssCompiler(['fixture/missing-file'], 'fixture.css', 'output.css', testWarnOptionsSet)
   var count = 0
 
   outputTree.warningStream = warningStreamStub
