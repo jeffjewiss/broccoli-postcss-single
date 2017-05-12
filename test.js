@@ -1,4 +1,5 @@
 /* global it, beforeEach, afterEach */
+'use strict'
 
 const assert = require('assert')
 const fs = require('fs')
@@ -67,8 +68,8 @@ function processCss (outputTree) {
     let content = fs.readFileSync(path.join(builder.outputPath, 'output.css'), 'utf8')
     let sourceMap = JSON.parse(fs.readFileSync(path.join(builder.outputPath, 'output.css.map'), 'utf8'))
 
-    assert.strictEqual(content.trim(), 'body {\n  color: rgb(102, 51, 153)\n}')
-    assert.strictEqual(sourceMap.mappings, 'AAAA;EACE,wBAAoB;CACrB')
+    assert.strictEqual(content.trim(), 'body {\n  color: #639\n}')
+    assert.strictEqual(sourceMap.mappings, 'AAAA;EACE,WAAoB;CACrB')
     assert.deepEqual(warnings, [])
   })
 }
