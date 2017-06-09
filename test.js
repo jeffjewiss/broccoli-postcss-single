@@ -23,12 +23,25 @@ const testWarnOptionsSet = {
   plugins: [
     {
       module: postcss.plugin('postcss-test-warn', function (opts) {
-        return function (css, result) {
+        return function (root, result) {
           result.warn('This is a warning.')
         }
       })
     }
   ]
+}
+
+const browsersOptionSet = {
+  plugins: [
+    {
+      module: postcss.plugin('return-options', (options) => {
+        return (root, result) => {
+          result.warn(options.browsers.join(', '))
+        }
+      })
+    }
+  ],
+  browsers: ['last 2 versions', 'ie > 9', 'ios >= 8', '> 5%']
 }
 
 const map = {
@@ -130,4 +143,16 @@ it('should expose non-syntax errors', function () {
 
   assert.strictEqual(count, 1)
   assert.deepEqual(warnings, [])
+})
+
+it('should use browser options', function () {
+  let outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', browsersOptionSet)
+  let builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
+  outputTree.warningStream = warningStreamStub
+
+  assert.strictEqual(outputTree.browsers.join(', '), 'last 2 versions, ie > 9, ios >= 8, > 5%')
+
+  return builder.build().then((dir) => {
+    assert.deepEqual(warnings, [ 'return-options: last 2 versions, ie > 9, ios >= 8, > 5%' ])
+  })
 })

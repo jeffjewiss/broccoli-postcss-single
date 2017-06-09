@@ -39,6 +39,7 @@ function PostcssCompiler (inputNodes, inputFile, outputFile, options, deprecated
 
   this.plugins = this.plugins || []
   this.map = this.map || {}
+  this.browsers = options.browsers
 }
 
 PostcssCompiler.prototype = Object.create(CachingWriter.prototype)
@@ -57,7 +58,8 @@ PostcssCompiler.prototype.build = function () {
   let options = {
     from: fromFilePath,
     to: toFilePath,
-    map: this.map
+    map: this.map,
+    browsers: this.browsers
   }
 
   this.plugins.forEach((plugin) => {
