@@ -27,6 +27,7 @@ var outputTree = compileCSS(inputTrees, inputFile, outputFile, options);
 - **`options`**:
  - **`plugins`**: An array of plugin objects to be used by Postcss (a minimum of 1 plugin is required). The supported object format is `module`: the plugin module itself, and `options`: an object of supported options for the given plugin.
  - **`map`**: An object of options to describe how Postcss should [handle source maps](https://github.com/postcss/postcss/blob/master/docs/source-maps.md).
+ - **`browsers`**: An array of supported browsers following the [browserslist](https://github.com/ai/browserslist) format. These will be passed to the options of each postcss plugin. This can be overridden on a per plugin basis.
 
 ## Example
 
@@ -40,13 +41,17 @@ var options = {
         {
             module: cssnext,
             options: {
-                browsers: ['last 2 version']
-              }
+                browsers: [ // this will override `options.browsers`
+                    '> 1%',
+                    'last 2 versions'
+                ]
+            }
         },
     ],
     map: {
         inline: true
-    }
+    },
+    browsers: ['last 2 version']
 };
 
 var outputTree = compileCSS(['styles'], 'app.css', 'app.css', options);
