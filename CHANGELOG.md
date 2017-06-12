@@ -1,5 +1,9 @@
 # master
 
+# 1.4.0
+
+* add support for passing browsers as an option to each plugin
+
 # 1.3.0
 
 * deprecate use of map and plugin arguments
