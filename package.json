@@ -11,7 +11,7 @@
     "test": "nyc mocha",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "standard --verbose | snazzy",
-    "prepublish": "npm run lint && npm test"
+    "prepare": "npm run lint && npm test"
   },
   "engines": {
     "node": "^4.5 || 6 || 7 || 8"
