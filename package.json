@@ -33,7 +33,7 @@
     "include-path-searcher": "0.1.0",
     "mkdirp": "0.5.1",
     "object-assign": "4.1.1",
-    "postcss": "6.0.0"
+    "postcss": "6.0.3"
   },
   "devDependencies": {
     "async": "^2.0.0",
