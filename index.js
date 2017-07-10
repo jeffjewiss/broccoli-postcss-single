@@ -40,6 +40,7 @@ function PostcssCompiler (inputNodes, inputFile, outputFile, options, deprecated
   this.plugins = this.plugins || []
   this.map = this.map || {}
   this.browsers = options.browsers
+  this.errors = options.errors || { showSourceCode: true, terminalColors: true }
 }
 
 PostcssCompiler.prototype = Object.create(CachingWriter.prototype)
@@ -61,6 +62,7 @@ PostcssCompiler.prototype.build = function () {
     map: this.map,
     browsers: this.browsers
   }
+  let { terminalColors, showSourceCode } = this.errors
 
   this.plugins.forEach((plugin) => {
     let pluginOptions = assign(options, plugin.options || {})
@@ -82,12 +84,12 @@ PostcssCompiler.prototype.build = function () {
       })
     }
   })
-  .catch((error) => {
-    if (error.name === 'CssSyntaxError') {
-      error.message += `\n${error.showSourceCode()}`
+  .catch((err) => {
+    if (err.name === 'CssSyntaxError') {
+      err.message += `\n${err.showSourceCode(terminalColors)}`
     }
 
-    throw error
+    throw err
   })
 }
 
