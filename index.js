@@ -62,7 +62,8 @@ PostcssCompiler.prototype.build = function () {
     map: this.map,
     browsers: this.browsers
   }
-  let { terminalColors, showSourceCode } = this.errors
+  let showSourceCode = this.errors.showSourceCode
+  let terminalColors = this.errors.terminalColors
 
   this.plugins.forEach((plugin) => {
     let pluginOptions = assign(options, plugin.options || {})
