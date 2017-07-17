@@ -3,7 +3,6 @@
 [![Travis Build Status][travis-img]][travis-url]
 [![npm version][npm-img]][npm-url]
 [![Coverage Status][coveralls-img]][coveralls-url]
-[![bitHound Overall Score][bithound-img]][bithound-url]
 
 The broccoli-postcss-single plugin runs your `css` through postcss plugins of your choosing.
 
@@ -64,5 +63,3 @@ module.exports = outputTree;
 [npm-url]: http://badge.fury.io/js/broccoli-postcss-single
 [coveralls-img]: https://coveralls.io/repos/github/jeffjewiss/broccoli-postcss-single/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/jeffjewiss/broccoli-postcss-single?branch=master
-[bitHound-img]: https://www.bithound.io/github/jeffjewiss/broccoli-postcss-single/badges/score.svg
-[bitHound-url]: https://www.bithound.io/github/jeffjewiss/broccoli-postcss-single
