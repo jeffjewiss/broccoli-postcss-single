@@ -87,7 +87,9 @@ PostcssCompiler.prototype.build = function () {
   })
   .catch((err) => {
     if (err.name === 'CssSyntaxError') {
-      err.message += `\n${err.showSourceCode(terminalColors)}`
+      if (showSourceCode) {
+        err.message += `\n${err.showSourceCode(terminalColors)}`
+      }
     }
 
     throw err
