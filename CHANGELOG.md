@@ -1,5 +1,9 @@
 # master
 
+# 1.4.1
+
+* update dependencies, fix showSourceCode logging option
+
 # 1.4.0
 
 * add support for passing browsers as an option to each plugin
