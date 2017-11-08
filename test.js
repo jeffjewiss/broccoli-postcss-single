@@ -160,3 +160,17 @@ it('should use browser options', function () {
     assert.deepEqual(warnings, [ 'return-options: last 2 versions, ie > 9, ios >= 8, > 5%' ])
   })
 })
+
+it('supports an array of plugin instances', function () {
+  let basicPlugin = basicOptionSet.plugins[0].module
+  let basicOptions = basicOptionSet.plugins[0].options
+  let pluginInstance = basicPlugin(basicOptions)
+
+  let outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', {
+    plugins: [
+      pluginInstance
+    ],
+    map: map
+  })
+  return processCss(outputTree)
+})

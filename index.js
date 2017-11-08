@@ -66,9 +66,18 @@ PostcssCompiler.prototype.build = function () {
   let terminalColors = this.errors.terminalColors
 
   this.plugins.forEach((plugin) => {
-    let pluginOptions = assign(options, plugin.options || {})
-    processor.use(plugin.module(pluginOptions))
+    let pluginInstance
+
+    if (plugin.module) {
+      let pluginOptions = assign(options, plugin.options || {})
+      pluginInstance = plugin.module(pluginOptions)
+    } else {
+      pluginInstance = plugin
+    }
+
+    processor.use(pluginInstance)
   })
+
 
   return processor.process(css, options)
   .then((result) => {
