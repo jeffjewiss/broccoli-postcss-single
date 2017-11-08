@@ -6,3 +6,11 @@
 **/.gitkeep
 tmp/
 dist/
+.nyc_output/
+fixture/
+.bithoundrc
+.travis.yml
+package.json
+README.md
+yarn.lock
+test.js
