@@ -1,5 +1,9 @@
 # master
 
+# 1.5.0
+
+* allow plugins to be specified as functions as well as objects
+
 # 1.4.1
 
 * update dependencies, fix showSourceCode logging option

@@ -78,7 +78,6 @@ PostcssCompiler.prototype.build = function () {
     processor.use(pluginInstance)
   })
 
-
   return processor.process(css, options)
   .then((result) => {
     result.warnings().forEach(warn => this.warningStream.write(warn.toString()))
