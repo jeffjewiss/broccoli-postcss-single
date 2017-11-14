@@ -21,11 +21,39 @@ var outputTree = compileCSS(inputTrees, inputFile, outputFile, options);
 ```
 
 - **`inputTrees`**: An array of trees that specify the directories used by Broccoli. If you have a single tree, pass `[tree]`.
+
 - **`inputFile`**: Relative path of the main CSS file to process.
+
 - **`outputFile`**: Relative path of the output CSS file.
+
 - **`options`**:
+
  - **`plugins`**: An array of plugin objects to be used by Postcss (a minimum of 1 plugin is required). The supported object format is `module`: the plugin module itself, and `options`: an object of supported options for the given plugin.
+
+There are two supported methods for defining plugins:
+
+1. Object form
+
+    ```javascript
+    plugins: [
+      {
+        module: require('some-plugin'),
+        options: { /* options for `some-plugin` */ }
+      }
+    ]
+    ```
+
+2. Function form
+
+    ```javascript
+    plugins: [
+      require('some-plugin')({ /* options for `some-plugin` */ }),
+      require('another-plugin')({ /* options for `another-plugin` */ }),
+    ]
+    ```
+
  - **`map`**: An object of options to describe how Postcss should [handle source maps](https://github.com/postcss/postcss/blob/master/docs/source-maps.md).
+
  - **`browsers`**: An array of supported browsers following the [browserslist](https://github.com/ai/browserslist) format. These will be passed to the options of each postcss plugin. This can be overridden on a per plugin basis.
 
 ## Example
