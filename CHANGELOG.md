@@ -1,5 +1,9 @@
 # master
 
+# 1.5.1
+
+* support Node 9
+
 # 1.5.0
 
 * allow plugins to be specified as functions as well as objects
