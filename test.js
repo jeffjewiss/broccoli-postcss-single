@@ -121,15 +121,15 @@ it('should expose syntax errors', function () {
   outputTree.warningStream = warningStreamStub
 
   return builder.build()
-  .catch((error) => {
-    count++
-    assert.strictEqual(error.broccoliPayload.originalError.name, 'CssSyntaxError')
-    assert.strictEqual(error.broccoliPayload.originalError.message, `${error.broccoliPayload.originalError.input.file}:1:1: Unknown word\n> 1 | a }\n    | ^\n  2 | `)
-  })
-  .then(() => {
-    assert.strictEqual(count, 1)
-    assert.deepEqual(warnings, [])
-  })
+    .catch((error) => {
+      count++
+      assert.strictEqual(error.broccoliPayload.originalError.name, 'CssSyntaxError')
+      assert.strictEqual(error.broccoliPayload.originalError.message, `${error.broccoliPayload.originalError.input.file}:1:1: Unknown word\n> 1 | a }\n    | ^\n  2 | `)
+    })
+    .then(() => {
+      assert.strictEqual(count, 1)
+      assert.deepEqual(warnings, [])
+    })
 })
 
 it('should expose non-syntax errors', function () {

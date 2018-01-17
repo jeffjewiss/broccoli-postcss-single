@@ -81,29 +81,29 @@ PostcssCompiler.prototype.build = function () {
   })
 
   return processor.process(css, options)
-  .then((result) => {
-    result.warnings().forEach(warn => this.warningStream.write(warn.toString()))
+    .then((result) => {
+      result.warnings().forEach(warn => this.warningStream.write(warn.toString()))
 
-    mkdirp.sync(path.dirname(toFilePath))
-    fs.writeFileSync(toFilePath, result.css, {
-      encoding: 'utf8'
-    })
-
-    if (result.map) {
-      fs.writeFileSync(`${toFilePath}.map`, result.map, {
+      mkdirp.sync(path.dirname(toFilePath))
+      fs.writeFileSync(toFilePath, result.css, {
         encoding: 'utf8'
       })
-    }
-  })
-  .catch((err) => {
-    if (err.name === 'CssSyntaxError') {
-      if (showSourceCode) {
-        err.message += `\n${err.showSourceCode(terminalColors)}`
-      }
-    }
 
-    throw err
-  })
+      if (result.map) {
+        fs.writeFileSync(`${toFilePath}.map`, result.map, {
+          encoding: 'utf8'
+        })
+      }
+    })
+    .catch((err) => {
+      if (err.name === 'CssSyntaxError') {
+        if (showSourceCode) {
+          err.message += `\n${err.showSourceCode(terminalColors)}`
+        }
+      }
+
+      throw err
+    })
 }
 
 module.exports = PostcssCompiler

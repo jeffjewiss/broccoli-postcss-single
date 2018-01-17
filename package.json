@@ -10,7 +10,7 @@
   "scripts": {
     "test": "nyc mocha",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "lint": "standard --verbose | snazzy",
+    "lint": "eslint .",
     "prepublishOnly": "npm run lint && npm test"
   },
   "engines": {
@@ -42,12 +42,16 @@
     "async": "^2.0.0",
     "broccoli": "^1.1.0",
     "coveralls": "^3.0.0",
+    "eslint": "^4.15.0",
+    "eslint-config-standard": "11.0.0-beta.0",
+    "eslint-plugin-import": "2.8.0",
+    "eslint-plugin-node": "5.2.1",
+    "eslint-plugin-promise": "3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
     "glob": "^7.0.3",
     "mocha": "^4.0.0",
     "nyc": "^11.0.2",
     "postcss-color-rebeccapurple": "^3.0.0",
-    "rimraf": "^2.4.0",
-    "snazzy": "^6.0.0",
-    "standard": "^10.0.2"
+    "rimraf": "^2.4.0"
   }
 }
