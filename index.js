@@ -40,6 +40,7 @@ function PostcssCompiler (inputNodes, inputFile, outputFile, options, deprecated
   this.plugins = this.plugins || []
   this.map = this.map || {}
   this.browsers = options.browsers
+  this.parser = options.parser
   this.errors = options.errors || { showSourceCode: true, terminalColors: true }
 }
 
@@ -60,6 +61,7 @@ PostcssCompiler.prototype.build = function () {
     from: fromFilePath,
     to: toFilePath,
     map: this.map,
+    parser: this.parser,
     browsers: this.browsers
   }
   let showSourceCode = this.errors.showSourceCode
