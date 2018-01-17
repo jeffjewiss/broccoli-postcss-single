@@ -56,6 +56,8 @@ There are two supported methods for defining plugins:
 
  - **`browsers`**: An array of supported browsers following the [browserslist](https://github.com/ai/browserslist) format. These will be passed to the options of each postcss plugin. This can be overridden on a per plugin basis.
 
+ - **`parser`**: A function that parses different CSS syntax (optional). Use this if you’d like to parse a different syntax, such as Sass or Sugarcss, by passing in a custom function or node module reference.
+
 ## Example
 
 ```javascript
