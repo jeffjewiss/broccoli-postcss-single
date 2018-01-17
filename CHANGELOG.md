@@ -1,5 +1,9 @@
 # master
 
+# 1.6.0
+
+* add support for passing a custom parser to postcss
+
 # 1.5.1
 
 * support Node 9
