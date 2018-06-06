@@ -1,5 +1,11 @@
 # master
 
+# 2.0.0
+
+* drop support for Node 4
+* remove deprecation warnings
+* remove map options default guard
+
 # 1.6.0
 
 * add support for passing a custom parser to postcss
