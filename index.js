@@ -23,7 +23,7 @@ function PostcssCompiler (inputNodes, inputFile, outputFile, options) {
   this.outputFile = outputFile
   this.warningStream = process.stderr
 
-  this.plugins = this.plugins || []
+  this.plugins = options.plugins || []
   this.map = options.map
   this.browsers = options.browsers
   this.parser = options.parser

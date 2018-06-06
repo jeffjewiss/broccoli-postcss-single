@@ -96,11 +96,6 @@ it('should process css', function () {
   return processCss(outputTree)
 })
 
-it('should process css using deprecated options', function () {
-  let outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', basicOptionSet.plugins, basicOptionSet.map)
-  return processCss(outputTree)
-})
-
 it('should expose warnings', function () {
   let outputTree = postcssCompiler(['fixture/warning'], 'fixture.css', 'output.css', testWarnOptionsSet)
   let builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
