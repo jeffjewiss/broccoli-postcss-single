@@ -8,9 +8,9 @@ const includePathSearcher = require('include-path-searcher')
 const CachingWriter = require('broccoli-caching-writer')
 const postcss = require('postcss')
 
-function PostcssCompiler (inputNodes, inputFile, outputFile, options, deprecatedMap) {
+function PostcssCompiler (inputNodes, inputFile, outputFile, options) {
   if (!(this instanceof PostcssCompiler)) {
-    return new PostcssCompiler(inputNodes, inputFile, outputFile, options, deprecatedMap)
+    return new PostcssCompiler(inputNodes, inputFile, outputFile, options)
   }
 
   if (!Array.isArray(inputNodes)) {
@@ -23,22 +23,8 @@ function PostcssCompiler (inputNodes, inputFile, outputFile, options, deprecated
   this.outputFile = outputFile
   this.warningStream = process.stderr
 
-  if (Array.isArray(options)) {
-    this.plugins = options
-    this.warningStream.write('The plugin argument has been deprecated, please set your plugins as a property on the options object.\n')
-  } else {
-    this.plugins = options.plugins
-  }
-
-  if (deprecatedMap) {
-    this.map = deprecatedMap
-    this.warningStream.write('The map argument has been deprecated, please set your map configuration as a property on the options object.\n')
-  } else {
-    this.map = options.map
-  }
-
   this.plugins = this.plugins || []
-  this.map = this.map || {}
+  this.map = options.map
   this.browsers = options.browsers
   this.parser = options.parser
   this.errors = options.errors || { showSourceCode: true, terminalColors: true }
