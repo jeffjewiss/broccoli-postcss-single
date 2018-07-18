@@ -87,7 +87,7 @@ function processCss (outputTree) {
 
     assert.strictEqual(content.trim(), 'body {\n  color: #639\n}')
     assert.strictEqual(sourceMap.mappings, 'AAAA;EACE,WAAoB;CACrB')
-    assert.deepEqual(warnings, [])
+    assert.deepStrictEqual(warnings, [])
   })
 }
 
@@ -104,7 +104,7 @@ it('should expose warnings', function () {
   return builder.build().then((dir) => {
     let content = fs.readFileSync(path.join(builder.outputPath, 'output.css'), 'utf8')
     assert.strictEqual(content.trim(), 'a {}')
-    assert.deepEqual(warnings, [ 'postcss-test-warn: This is a warning.' ])
+    assert.deepStrictEqual(warnings, [ 'postcss-test-warn: This is a warning.' ])
   })
 })
 
@@ -123,7 +123,7 @@ it('should expose syntax errors', function () {
     })
     .then(() => {
       assert.strictEqual(count, 1)
-      assert.deepEqual(warnings, [])
+      assert.deepStrictEqual(warnings, [])
     })
 })
 
@@ -141,7 +141,7 @@ it('should expose non-syntax errors', function () {
   }
 
   assert.strictEqual(count, 1)
-  assert.deepEqual(warnings, [])
+  assert.deepStrictEqual(warnings, [])
 })
 
 it('should use browser options', function () {
@@ -152,7 +152,7 @@ it('should use browser options', function () {
   assert.strictEqual(outputTree.browsers.join(', '), 'last 2 versions, ie > 9, ios >= 8, > 5%')
 
   return builder.build().then((dir) => {
-    assert.deepEqual(warnings, [ 'return-options: last 2 versions, ie > 9, ios >= 8, > 5%' ])
+    assert.deepStrictEqual(warnings, [ 'return-options: last 2 versions, ie > 9, ios >= 8, > 5%' ])
   })
 })
 
