@@ -1,5 +1,12 @@
 # master
 
+# 2.1.0
+
+* use deepStrictEqual instead of deepEqual for options
+* remove yarn
+* upgrade to Postcss 7
+* relax dev dependencies
+
 # 2.0.0
 
 * drop support for Node 4
