@@ -1,5 +1,9 @@
 # master
 
+# 2.1.1
+
+* fix yarn engine text
+
 # 2.1.0
 
 * use deepStrictEqual instead of deepEqual for options
