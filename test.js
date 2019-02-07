@@ -86,7 +86,7 @@ function processCss (outputTree) {
     let sourceMap = JSON.parse(fs.readFileSync(path.join(builder.outputPath, 'output.css.map'), 'utf8'))
 
     assert.strictEqual(content.trim(), 'body {\n  color: #639\n}')
-    assert.strictEqual(sourceMap.mappings, 'AAAA;EACE,WAAoB;CACrB')
+    assert.strictEqual(sourceMap.mappings, 'AAAA;EACE;AACF')
     assert.deepStrictEqual(warnings, [])
   })
 }
