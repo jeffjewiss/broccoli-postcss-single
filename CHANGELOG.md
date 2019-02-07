@@ -1,5 +1,9 @@
 # master
 
+# 2.1.2
+
+* security release for extend and lodash
+
 # 2.1.1
 
 * fix yarn engine text
