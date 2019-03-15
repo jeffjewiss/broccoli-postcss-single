@@ -8,7 +8,11 @@ const includePathSearcher = require('include-path-searcher')
 const CachingWriter = require('broccoli-caching-writer')
 const postcss = require('postcss')
 
-function PostcssCompiler (inputNodes, inputFile, outputFile, options) {
+function PostcssCompiler (inputNodes, inputFile, outputFile, _options) {
+  var options = Object.assign({
+    cacheInclude: [/.*\.(js|css)$/]
+  }, _options)
+
   if (!(this instanceof PostcssCompiler)) {
     return new PostcssCompiler(inputNodes, inputFile, outputFile, options)
   }
