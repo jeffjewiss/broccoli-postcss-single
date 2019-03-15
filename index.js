@@ -17,7 +17,9 @@ function PostcssCompiler (inputNodes, inputFile, outputFile, options) {
     throw new Error('Expected array for first argument - did you mean [tree] instead of tree?')
   }
 
-  CachingWriter.call(this, Array.isArray(inputNodes) ? inputNodes : [inputNodes])
+  CachingWriter.call(this, Array.isArray(inputNodes) ? inputNodes : [inputNodes], {
+    cacheInclude: [/.*\.(js|css)$/]
+  })
 
   this.inputFile = inputFile
   this.outputFile = outputFile
