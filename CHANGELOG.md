@@ -1,5 +1,10 @@
 # master
 
+# 3.0.0
+
+* drop support for Node 6
+* dependency updates
+
 # 2.1.2
 
 * security release for extend and lodash
