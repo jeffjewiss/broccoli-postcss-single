@@ -57,7 +57,7 @@ basicOptionSet.map = map
 testWarnOptionsSet.map = map
 
 let warnings = []
-let warningStreamStub = {
+const warningStreamStub = {
   write: function (warning) {
     warnings.push(warning)
   }
@@ -78,12 +78,12 @@ afterEach(function () {
 })
 
 function processCss (outputTree) {
-  let builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
+  const builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
   outputTree.warningStream = warningStreamStub
 
   return builder.build().then(function () {
-    let content = fs.readFileSync(path.join(builder.outputPath, 'output.css'), 'utf8')
-    let sourceMap = JSON.parse(fs.readFileSync(path.join(builder.outputPath, 'output.css.map'), 'utf8'))
+    const content = fs.readFileSync(path.join(builder.outputPath, 'output.css'), 'utf8')
+    const sourceMap = JSON.parse(fs.readFileSync(path.join(builder.outputPath, 'output.css.map'), 'utf8'))
 
     assert.strictEqual(content.trim(), 'body {\n  color: #639\n}')
     assert.strictEqual(sourceMap.mappings, 'AAAA;EACE;AACF')
@@ -92,25 +92,25 @@ function processCss (outputTree) {
 }
 
 it('should process css', function () {
-  let outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', basicOptionSet)
+  const outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', basicOptionSet)
   return processCss(outputTree)
 })
 
 it('should expose warnings', function () {
-  let outputTree = postcssCompiler(['fixture/warning'], 'fixture.css', 'output.css', testWarnOptionsSet)
-  let builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
+  const outputTree = postcssCompiler(['fixture/warning'], 'fixture.css', 'output.css', testWarnOptionsSet)
+  const builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
   outputTree.warningStream = warningStreamStub
 
   return builder.build().then((dir) => {
-    let content = fs.readFileSync(path.join(builder.outputPath, 'output.css'), 'utf8')
+    const content = fs.readFileSync(path.join(builder.outputPath, 'output.css'), 'utf8')
     assert.strictEqual(content.trim(), 'a {}')
-    assert.deepStrictEqual(warnings, [ 'postcss-test-warn: This is a warning.' ])
+    assert.deepStrictEqual(warnings, ['postcss-test-warn: This is a warning.'])
   })
 })
 
 it('should expose syntax errors', function () {
-  let outputTree = postcssCompiler(['fixture/syntax-error'], 'fixture.css', 'output.css', testWarnOptionsSet)
-  let builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
+  const outputTree = postcssCompiler(['fixture/syntax-error'], 'fixture.css', 'output.css', testWarnOptionsSet)
+  const builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
   let count = 0
 
   outputTree.warningStream = warningStreamStub
@@ -128,7 +128,7 @@ it('should expose syntax errors', function () {
 })
 
 it('should expose non-syntax errors', function () {
-  let outputTree = postcssCompiler(['fixture/missing-file'], 'fixture.css', 'output.css', testWarnOptionsSet)
+  const outputTree = postcssCompiler(['fixture/missing-file'], 'fixture.css', 'output.css', testWarnOptionsSet)
   let count = 0
 
   outputTree.warningStream = warningStreamStub
@@ -145,23 +145,23 @@ it('should expose non-syntax errors', function () {
 })
 
 it('should use browser options', function () {
-  let outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', browsersOptionSet)
-  let builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
+  const outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', browsersOptionSet)
+  const builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
   outputTree.warningStream = warningStreamStub
 
   assert.strictEqual(outputTree.browsers.join(', '), 'last 2 versions, ie > 9, ios >= 8, > 5%')
 
   return builder.build().then((dir) => {
-    assert.deepStrictEqual(warnings, [ 'return-options: last 2 versions, ie > 9, ios >= 8, > 5%' ])
+    assert.deepStrictEqual(warnings, ['return-options: last 2 versions, ie > 9, ios >= 8, > 5%'])
   })
 })
 
 it('supports an array of plugin instances', function () {
-  let basicPlugin = basicOptionSet.plugins[0].module
-  let basicOptions = basicOptionSet.plugins[0].options
-  let pluginInstance = basicPlugin(basicOptions)
+  const basicPlugin = basicOptionSet.plugins[0].module
+  const basicOptions = basicOptionSet.plugins[0].options
+  const pluginInstance = basicPlugin(basicOptions)
 
-  let outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', {
+  const outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', {
     plugins: [
       pluginInstance
     ],

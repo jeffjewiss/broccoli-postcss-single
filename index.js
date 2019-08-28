@@ -34,30 +34,30 @@ PostcssCompiler.prototype = Object.create(CachingWriter.prototype)
 PostcssCompiler.prototype.constructor = PostcssCompiler
 
 PostcssCompiler.prototype.build = function () {
-  let toFilePath = `${this.outputPath}/${this.outputFile}`
-  let fromFilePath = includePathSearcher.findFileSync(this.inputFile, this.inputPaths)
+  const toFilePath = `${this.outputPath}/${this.outputFile}`
+  const fromFilePath = includePathSearcher.findFileSync(this.inputFile, this.inputPaths)
 
   if (!this.plugins || this.plugins.length < 1) {
     throw new Error('You must provide at least 1 plugin in the plugin array')
   }
 
-  let processor = postcss()
-  let css = fs.readFileSync(fromFilePath, 'utf8')
-  let options = {
+  const processor = postcss()
+  const css = fs.readFileSync(fromFilePath, 'utf8')
+  const options = {
     from: fromFilePath,
     to: toFilePath,
     map: this.map,
     parser: this.parser,
     browsers: this.browsers
   }
-  let showSourceCode = this.errors.showSourceCode
-  let terminalColors = this.errors.terminalColors
+  const showSourceCode = this.errors.showSourceCode
+  const terminalColors = this.errors.terminalColors
 
   this.plugins.forEach((plugin) => {
     let pluginInstance
 
     if (plugin.module) {
-      let pluginOptions = assign(options, plugin.options || {})
+      const pluginOptions = assign(options, plugin.options || {})
       pluginInstance = plugin.module(pluginOptions)
     } else {
       pluginInstance = plugin
