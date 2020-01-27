@@ -40,7 +40,7 @@
   "dependencies": {
     "broccoli-caching-writer": "^3.0.3",
     "include-path-searcher": "^0.1.0",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.3",
     "object-assign": "^4.1.1",
     "postcss": "^7.0.0"
   },
