@@ -13,11 +13,7 @@ function PostcssCompiler (inputNodes, inputFile, outputFile, options) {
     return new PostcssCompiler(inputNodes, inputFile, outputFile, options)
   }
 
-  if (!Array.isArray(inputNodes)) {
-    throw new Error('Expected array for first argument - did you mean [tree] instead of tree?')
-  }
-
-  CachingWriter.call(this, Array.isArray(inputNodes) ? inputNodes : [inputNodes])
+  CachingWriter.call(this, Array.isArray(inputNodes) ? inputNodes : [inputNodes], options)
 
   this.inputFile = inputFile
   this.outputFile = outputFile
