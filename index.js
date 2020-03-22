@@ -10,7 +10,7 @@ const postcss = require('postcss')
 
 function PostcssCompiler (inputNodes, inputFile, outputFile, _options) {
   var options = Object.assign({
-    cacheInclude: [/.*\.(js|css)$/]
+    cacheInclude: [/.*\.(css|scss|sass|less)$/]
   }, _options)
 
   if (!(this instanceof PostcssCompiler)) {
