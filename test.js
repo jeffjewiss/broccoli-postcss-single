@@ -19,6 +19,10 @@ const basicOptionSet = {
   ]
 }
 
+const noPluginsOptionSet = {
+  plugins: []
+}
+
 const testWarnOptionsSet = {
   errors: {
     showSourceCode: true,
@@ -168,4 +172,17 @@ it('supports an array of plugin instances', function () {
     map: map
   })
   return processCss(outputTree)
+})
+
+it('should throw an error if no plugins are provided', function () {
+  const outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', noPluginsOptionSet)
+  const builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
+
+  outputTree.warningStream = warningStreamStub
+
+  return builder.build()
+    .catch((error) => {
+      assert.strictEqual(error.broccoliPayload.originalError.name, 'Error')
+      assert.strictEqual(error.broccoliPayload.originalError.message, 'You must provide at least 1 plugin in the plugin array')
+    })
 })
