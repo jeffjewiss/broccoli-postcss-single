@@ -28,35 +28,39 @@ var outputTree = compileCSS(inputTrees, inputFile, outputFile, options);
 
 - **`options`**:
 
- - **`plugins`**: An array of plugin objects to be used by Postcss (a minimum of 1 plugin is required). The supported object format is `module`: the plugin module itself, and `options`: an object of supported options for the given plugin.
+  - **`cacheExclude`**: An array of regular expressions that files and directories in an input node cannot pass in order to be included in the cache hash for rebuilds (blacklist).
+ 
+  - **`cacheInclude`**: An array of regular expressions that files and directories in an input node must pass (match at least one pattern) in order to be included in the cache hash for rebuilds (whitelist).
 
-There are two supported methods for defining plugins:
+  - **`plugins`**: An array of plugin objects to be used by Postcss (a minimum of 1 plugin is required). The supported object format is `module`: the plugin module itself, and `options`: an object of supported options for the given plugin.
 
-1. Object form
+  There are two supported methods for defining plugins:
 
-    ```javascript
-    plugins: [
-      {
-        module: require('some-plugin'),
-        options: { /* options for `some-plugin` */ }
-      }
-    ]
-    ```
+  1. Object form
 
-2. Function form
+      ```javascript
+      plugins: [
+        {
+          module: require('some-plugin'),
+          options: { /* options for `some-plugin` */ }
+        }
+      ]
+      ```
 
-    ```javascript
-    plugins: [
-      require('some-plugin')({ /* options for `some-plugin` */ }),
-      require('another-plugin')({ /* options for `another-plugin` */ }),
-    ]
-    ```
+  2. Function form
 
- - **`map`**: An object of options to describe how Postcss should [handle source maps](https://github.com/postcss/postcss/blob/master/docs/source-maps.md).
+      ```javascript
+      plugins: [
+        require('some-plugin')({ /* options for `some-plugin` */ }),
+        require('another-plugin')({ /* options for `another-plugin` */ }),
+      ]
+      ```
 
- - **`browsers`**: An array of supported browsers following the [browserslist](https://github.com/ai/browserslist) format. These will be passed to the options of each postcss plugin. This can be overridden on a per plugin basis.
+  - **`map`**: An object of options to describe how Postcss should [handle source maps](https://github.com/postcss/postcss/blob/master/docs/source-maps.md).
 
- - **`parser`**: A function that parses different CSS syntax (optional). Use this if you’d like to parse a different syntax, such as Sass or Sugarcss, by passing in a custom function or node module reference.
+  - **`browsers`**: An array of supported browsers following the [browserslist](https://github.com/ai/browserslist) format. These will be passed to the options of each postcss plugin. This can be overridden on a per plugin basis.
+
+  - **`parser`**: A function that parses different CSS syntax (optional). Use this if you’d like to parse a different syntax, such as Sass or Sugarcss, by passing in a custom function or node module reference.
 
 ## Example
 
@@ -86,6 +90,15 @@ var options = {
 var outputTree = compileCSS(['styles'], 'app.css', 'app.css', options);
 module.exports = outputTree;
 ```
+
+
+## Notes on Caching
+
+The default list of file extensions for caching is set to `.css, .scss, .sass, .less` for faster incremental builds. If you are using a parser or filetype not in the list you will want to add the file extension as a regex to the `cacheInclude` option.
+
+If you are using something like **Tailwind** or a postcss plugin with a config file that you would like to trigger a rebuild, you will need to update the options to cache JS files: `cacheInclude: [/.*\.(css|scss|sass|less|js)$/],`.
+
+If you are using something like **PurceCSS** and would like postcss to rebuild when tempalte files are updated, you will need to update the options to cache HBS files: `cacheInclude: [/.*\.(css|scss|sass|less|hbs)$/],`. However, in most cases PurgeCSS should only be run for a production build and this shouldn't be necessary.
 
 [travis-img]: https://travis-ci.org/jeffjewiss/broccoli-postcss-single.svg?branch=master
 [travis-url]: https://travis-ci.org/jeffjewiss/broccoli-postcss-single
