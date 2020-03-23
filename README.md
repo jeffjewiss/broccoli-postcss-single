@@ -3,6 +3,8 @@
 [![Travis Build Status][travis-img]][travis-url]
 [![npm version][npm-img]][npm-url]
 [![Coverage Status][coveralls-img]][coveralls-url]
+[![monthly downloads][monthly-downloads-img]][monthly-downloads-url]
+[![total downloads][total-downloads-img]][total-downloads-url]
 
 The broccoli-postcss-single plugin runs your `css` through postcss plugins of your choosing.
 
@@ -103,6 +105,10 @@ If you are using something like **PurceCSS** and would like postcss to rebuild w
 [travis-img]: https://travis-ci.org/jeffjewiss/broccoli-postcss-single.svg?branch=master
 [travis-url]: https://travis-ci.org/jeffjewiss/broccoli-postcss-single
 [npm-img]: https://badge.fury.io/js/broccoli-postcss-single.svg
-[npm-url]: http://badge.fury.io/js/broccoli-postcss-single
+[npm-url]: https://www.npmjs.com/package/broccoli-postcss-single
+[monthly-downloads-img]: https://img.shields.io/npm/dm/broccoli-postcss-single.svg
+[monthly-downloads-url]: https://www.npmjs.com/package/broccoli-postcss-single
+[total-downloads-img]: https://img.shields.io/npm/dt/broccoli-postcss-single.svg
+[total-downloads-url]: https://www.npmjs.com/package/broccoli-postcss-single
 [coveralls-img]: https://coveralls.io/repos/github/jeffjewiss/broccoli-postcss-single/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/jeffjewiss/broccoli-postcss-single?branch=master
