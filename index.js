@@ -9,9 +9,12 @@ const CachingWriter = require('broccoli-caching-writer')
 const postcss = require('postcss')
 
 function PostcssCompiler (inputNodes, inputFile, outputFile, _options) {
-  var options = Object.assign({
-    cacheInclude: [/.*\.(css|scss|sass|less)$/]
-  }, _options)
+  const defaultOptions = {
+    cacheExclude: [],
+    cacheInclude: [/.*\.(css|scss|sass|less)$/],
+    plugins: []
+  }
+  const options = Object.assign(defaultOptions, _options)
 
   if (!(this instanceof PostcssCompiler)) {
     return new PostcssCompiler(inputNodes, inputFile, outputFile, options)
@@ -23,7 +26,7 @@ function PostcssCompiler (inputNodes, inputFile, outputFile, _options) {
   this.outputFile = outputFile
   this.warningStream = process.stderr
 
-  this.plugins = options.plugins || []
+  this.plugins = options.plugins
   this.map = options.map
   this.browsers = options.browsers
   this.parser = options.parser
