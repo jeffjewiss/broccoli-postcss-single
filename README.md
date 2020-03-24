@@ -100,7 +100,7 @@ The default list of file extensions for caching is set to `.css, .scss, .sass, .
 
 If you are using something like **Tailwind** or a postcss plugin with a config file that you would like to trigger a rebuild, you will need to update the options to cache JS files: `cacheInclude: [/.*\.(css|scss|sass|less|js)$/],`.
 
-If you are using something like **PurceCSS** and would like postcss to rebuild when tempalte files are updated, you will need to update the options to cache HBS files: `cacheInclude: [/.*\.(css|scss|sass|less|hbs)$/],`. However, in most cases PurgeCSS should only be run for a production build and this shouldn't be necessary.
+If you are using something like **PurgeCSS** and would like postcss to rebuild when tempalte files are updated, you will need to update the options to cache HBS files: `cacheInclude: [/.*\.(css|scss|sass|less|hbs)$/],`. However, in most cases PurgeCSS should only be run for a production build and this shouldn't be necessary.
 
 [travis-img]: https://travis-ci.org/jeffjewiss/broccoli-postcss-single.svg?branch=master
 [travis-url]: https://travis-ci.org/jeffjewiss/broccoli-postcss-single
