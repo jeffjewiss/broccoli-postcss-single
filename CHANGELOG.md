@@ -1,5 +1,11 @@
 # master
 
+# 4.0.0
+
+* BREAKING: adds `cacheExclude` and `cacheInclude` options with defaults
+* drop support for Node 8
+* dependency updates
+
 # 3.0.0
 
 * drop support for Node 6
