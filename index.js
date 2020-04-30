@@ -79,7 +79,7 @@ PostcssCompiler.prototype.build = function () {
       })
 
       if (result.map) {
-        fs.writeFileSync(`${toFilePath}.map`, result.map, {
+        fs.writeFileSync(`${toFilePath}.map`, JSON.stringify(result.map), {
           encoding: 'utf8'
         })
       }
