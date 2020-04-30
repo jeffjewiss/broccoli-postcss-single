@@ -1,5 +1,9 @@
 # master
 
+# 4.0.1
+
+* uses JSON.stringify when writing souremap contents to disk
+
 # 4.0.0
 
 * BREAKING: adds `cacheExclude` and `cacheInclude` options with defaults
