@@ -1,5 +1,10 @@
 # master
 
+# 5.0.0
+
+* use native classes
+* BREAKING: use Postcss V8
+
 # 4.0.1
 
 * uses JSON.stringify when writing souremap contents to disk
