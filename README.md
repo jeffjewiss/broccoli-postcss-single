@@ -16,7 +16,8 @@ npm install --save-dev broccoli-postcss-single
 
 ## Compatibility
 
-Due to changes in the plugin API of Postcss V8 some plugins will need to be updated after upgrading Postcss. This should be as simple as updating this package from v4 to v5 (once released), however compatibility is not guaranteed.
+Due to changes in the plugin API of Postcss V8 some plugins may need to be updated after upgrading Postcss. Otherwise, switching to Postcss V8 should be as simple as updating this package from V4 to V5 (once released), however compatibility is not guaranteed.
+
 
 - V5 broccoli-postcss (unreleased) -> Postcss V8
 - V4 broccoli-postcss -> Postcss V7
