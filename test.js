@@ -1,12 +1,12 @@
 /* global it, beforeEach, afterEach */
+
 'use strict'
 
 const assert = require('assert')
 const fs = require('fs')
 const path = require('path')
 const broccoli = require('broccoli')
-const postcssCompiler = require('./')
-const postcss = require('postcss')
+const PostcssCompiler = require('./')
 const rimraf = require('rimraf')
 const glob = require('glob')
 const async = require('async')
@@ -30,11 +30,14 @@ const testWarnOptionsSet = {
   },
   plugins: [
     {
-      module: postcss.plugin('postcss-test-warn', function (opts) {
-        return function (root, result) {
-          result.warn('This is a warning.')
+      module (opts) {
+        return {
+          postcssPlugin: 'postcss-test-warn',
+          Root (root, { result }) {
+            result.warn('This is a warning.')
+          }
         }
-      })
+      }
     }
   ]
 }
@@ -42,11 +45,14 @@ const testWarnOptionsSet = {
 const browsersOptionSet = {
   plugins: [
     {
-      module: postcss.plugin('return-options', (options) => {
-        return (root, result) => {
-          result.warn(options.browsers.join(', '))
+      module (options) {
+        return {
+          postcssPlugin: 'return-options',
+          Root (root, { result }) {
+            result.warn(options.browsers.join(', '))
+          }
         }
-      })
+      }
     }
   ],
   browsers: ['last 2 versions', 'ie > 9', 'ios >= 8', '> 5%']
@@ -96,12 +102,12 @@ function processCss (outputTree) {
 }
 
 it('should process css', function () {
-  const outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', basicOptionSet)
+  const outputTree = new PostcssCompiler(['fixture/success'], 'fixture.css', 'output.css', basicOptionSet)
   return processCss(outputTree)
 })
 
 it('should expose warnings', function () {
-  const outputTree = postcssCompiler(['fixture/warning'], 'fixture.css', 'output.css', testWarnOptionsSet)
+  const outputTree = new PostcssCompiler(['fixture/warning'], 'fixture.css', 'output.css', testWarnOptionsSet)
   const builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
   outputTree.warningStream = warningStreamStub
 
@@ -113,7 +119,7 @@ it('should expose warnings', function () {
 })
 
 it('should expose syntax errors', function () {
-  const outputTree = postcssCompiler(['fixture/syntax-error'], 'fixture.css', 'output.css', testWarnOptionsSet)
+  const outputTree = new PostcssCompiler(['fixture/syntax-error'], 'fixture.css', 'output.css', testWarnOptionsSet)
   const builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
   let count = 0
 
@@ -132,7 +138,7 @@ it('should expose syntax errors', function () {
 })
 
 it('should expose non-syntax errors', function () {
-  const outputTree = postcssCompiler(['fixture/missing-file'], 'fixture.css', 'output.css', testWarnOptionsSet)
+  const outputTree = new PostcssCompiler(['fixture/missing-file'], 'fixture.css', 'output.css', testWarnOptionsSet)
   let count = 0
 
   outputTree.warningStream = warningStreamStub
@@ -149,7 +155,7 @@ it('should expose non-syntax errors', function () {
 })
 
 it('should use browser options', function () {
-  const outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', browsersOptionSet)
+  const outputTree = new PostcssCompiler(['fixture/success'], 'fixture.css', 'output.css', browsersOptionSet)
   const builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
   outputTree.warningStream = warningStreamStub
 
@@ -165,7 +171,7 @@ it('supports an array of plugin instances', function () {
   const basicOptions = basicOptionSet.plugins[0].options
   const pluginInstance = basicPlugin(basicOptions)
 
-  const outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', {
+  const outputTree = new PostcssCompiler(['fixture/success'], 'fixture.css', 'output.css', {
     plugins: [
       pluginInstance
     ],
@@ -175,7 +181,7 @@ it('supports an array of plugin instances', function () {
 })
 
 it('should throw an error if no plugins are provided', function () {
-  const outputTree = postcssCompiler(['fixture/success'], 'fixture.css', 'output.css', noPluginsOptionSet)
+  const outputTree = new PostcssCompiler(['fixture/success'], 'fixture.css', 'output.css', noPluginsOptionSet)
   const builder = new broccoli.Builder(outputTree) // eslint-disable-line no-new
 
   outputTree.warningStream = warningStreamStub
