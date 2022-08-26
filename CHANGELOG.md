@@ -1,5 +1,10 @@
 # master
 
+# 5.0.2
+
+- dependency updates
+- GitHub workflow updates
+
 # 5.0.1
 
 - npm package security fixes
