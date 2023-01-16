@@ -40,7 +40,7 @@
     "broccoli-caching-writer": "^3.0.3",
     "include-path-searcher": "^0.1.0",
     "minimist": ">=1.2.5",
-    "mkdirp": "^1.0.3",
+    "mkdirp": "^2.0.0",
     "object-assign": "^4.1.1",
     "postcss": "^8.1.4"
   },
